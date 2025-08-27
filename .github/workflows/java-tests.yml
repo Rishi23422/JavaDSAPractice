@@ -41,6 +41,7 @@ jobs:
           mvn test
         else
           mvn test -Dtest=com.dsapractise.smartpaisa.${{ github.event.inputs.test-class }}
+        fi
       
 
     - name: Upload test results
