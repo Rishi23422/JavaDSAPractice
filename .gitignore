@@ -1,0 +1,36 @@
+# Java build output
+/bin/
+/build/
+/out/
+*.class
+
+# IDE files
+*.iml
+.idea/
+*.ipr
+*.iws
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Gradle
+.gradle/
+build/
+
+# Temporary files
+*.tmp
+*.swp
+
+# Jupyter Notebooks
+*.ipynb_checkpoints/
+
+# Environment
