@@ -1,0 +1,51 @@
+name: Java Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+    inputs:
+      test-class:
+        description: 'Select specific test class to run (runs all tests if none selected)'
+        required: false
+        type: choice
+        default: 'All Tests'
+        options:
+          - 'All Tests'
+          - 'InvestmentAllocatorTest'
+          - 'RiskCalculatorTest'
+          - 'SecurityManagerTest'
+          - 'SipOptimizerTest'
+          - 'UpiValidatorTest'
+          - 'WealthCalculatorTest'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: maven
+        
+    - name: Run Tests with Maven
+      run: |
+        if [ "${{ github.event.inputs.test-class }}" = "All Tests" ] || [ "${{ github.event.inputs.test-class }}" = "" ]; then
+          mvn test
+        else
+          mvn test -Dtest=com.dsapractise.smartpaisa.${{ github.event.inputs.test-class }}
+      
+
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: target/surefire-reports/
